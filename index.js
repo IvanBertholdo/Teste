@@ -22,4 +22,4 @@ fastify.listen({ port: port }, (err, address) => {
     fastify.log.info(`Server listening at ${address}`);
   });
 
-module.exports = index;
+module.exports = fastify;
