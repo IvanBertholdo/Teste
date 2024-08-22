@@ -1,25 +1,14 @@
-// index.js
-const fastify = require('fastify')({ logger: true });
-const port = process.env.PORT || 3000;
+import Fastify from 'fastify'
 
-fastify.get('/', (request, reply) => {
-  reply.send('Hello from Vercel!');
-});
+const app = Fastify({
+  logger: true,
+})
 
-fastify.get('/api/users', async (request, reply) => {
-  const users = [
-    { id: 1, name: 'John Doe' },
-    { id: 2, name: 'Jane Doe' }
-  ];
-  reply.send(users);
-});
+app.get('/', async (req, res) => {
+  return res.status(200).type('text/html').send(html)
+})
 
-fastify.listen({ port: port }, (err, address) => {
-    if (err) {
-      fastify.log.error(err);
-      process.exit(1);
-    }
-    fastify.log.info(`Server listening at ${address}`);
-  });
-
-module.exports = fastify;
+export default async function handler(req: any, res: any) {
+  await app.ready()
+  app.server.emit('request', req, res)
+}
